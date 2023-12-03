@@ -1,0 +1,50 @@
+{% extends "base_user.html" %}
+    
+    {% block style %}
+    <style>
+        .card-space {
+            margin-bottom: 20px;
+        }
+        .card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.305);
+        }
+    </style>
+    {% endblock %}
+    {% block title %} Dashboard {% endblock %}
+    
+    
+    {% block content %}
+    
+    <div class="container">
+        <div class="col-md-4">
+            <div class="card user-info-card">
+                <div class="card-body">
+                    <h4 class="card-title">User Information</h4>
+                    <p class="card-text"><strong>Name:</strong> {{ user_info['name'] }}</p>
+                    <p class="card-text"><strong>Email:</strong> {{ user_info['email'] }}</p>
+                    <p class="card-text"><strong>Address:</strong> {{ user_info['address'] }}</p>
+                    <p class="card-text"><strong>Phone No:</strong> {{ user_info['phone_no'] }}</p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 30px;"></div>
+        <div class="col-md-8 mx-auto">
+            <h1 style="text-align: center;">User Order History</h1>
+
+            {% for order in user_orders %}
+            <div class="order-card card">
+                <div class="card-body">
+                    <p class="order-date">{{ order['order_date'] }}</p>
+                    <ul class="order-items">
+                        {% for item in order['items'] %}
+                        <li class="order-item">{{ item['quantity'] }} x {{ item['product_name'] }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="order-total">Total: ₹{{ order['total_price'] }}</p>
+                </div>
+            </div>
+            <div class="card-space"></div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}

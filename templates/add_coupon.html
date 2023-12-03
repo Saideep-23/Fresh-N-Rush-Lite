@@ -1,0 +1,23 @@
+{% extends "base_manager.html" %}
+    
+    {% block title %} Add Coupon {% endblock %}
+      
+    {% block content %}
+    <div class="container py-4 py-xl-5 mx-auto col-xl-3">
+        <h1>Add Coupon</h1>
+        <br>
+        <form method="POST" enctype="multipart/form-data">
+            
+            <div class="mb-3">
+                <label class="form-label">Coupon Code</label>
+                <input type="text" class="form-control" name="coupon_code" aria-describedby="emailHelp" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Discount %</label>
+                <input type="number" step="0.1" class="form-control" name="discount" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Add Coupon</button>
+          </form>
+    </div>
+    {% endblock %}

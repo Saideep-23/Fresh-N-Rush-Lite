@@ -1,0 +1,125 @@
+{% extends "base_user.html" %}
+    
+    {% block style %}
+    <style>
+        .btn-outline-success {
+            color: #fff;
+            background-color: #27ae60;
+            border-color: #27ae60;
+        }
+        .card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.305);
+        }
+        .add-gap{
+            margin-top: 20px;
+        }        
+        .cart-total {
+            font-size: 24px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .checkout-btn {
+            font-size: 18px;
+            display: block;
+            margin: 20px auto;
+        }
+        .delete-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #dc3545;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .delete-button:hover {
+            color: #c82333;
+        }        
+        .card-title {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+        .card-text {
+            font-size: 20px;
+            color: black;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .right-pane {
+            position: sticky;
+            top: 20px;
+            right: 20px; 
+            background-color: white; 
+            padding: 10px;
+            border: 1px solid #ccc; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1; 
+            max-height: calc(30vh - 40px); 
+            overflow-y: auto; 
+        }
+    </style>
+    {% endblock %}
+    {% block title %} Shopping Cart {% endblock %}
+    
+    {% block content %}
+
+    
+    {% if cart_items %}
+    <div class="container">
+        <h1 class="cart-title">Your Shopping Cart</h1>
+        <div class="row">
+            <div class="col-9">
+                <div class="row">
+                    {% for (product, price, count, productID) in cart_items %}
+                    <div class="add-gap"></div>
+                    <div class="col">
+                        <div class="card" style="width: 70%; margin-left: 20%;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title">{{ product }}</h5>
+                                    <a href="/shopping_cart/delete_product/{{ productID }}" class="btn btn-sm">&#10006;</a>
+                                </div>                                
+                                <p class="card-text">Price: ₹{{ price }}</p>                                
+                                <div class="d-flex align-items-center justify-content-center"> 
+                                    <p class="card-text me-2" style="margin-left: 13%;">Quantity:</p> 
+                                    <form action="/shopping_cart/update_product/{{ productID }}" method="POST" class="d-flex align-items-center">
+                                        <input type="number" class="form-control me-2" style="max-width: 70px;" value="{{ count }}" name="count">
+                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                    </form>
+                                </div>
+                                <p class="card-text" style="font-weight: bold;">Total: ₹{{ count * price }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-3 right-pane">
+                <form method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="apply-coupon-button" name="coupon_code">
+                        <button class="btn btn-outline-secondary" type="submit" id="apply-coupon-button">Apply</button>
+                    </div>
+                </form>
+                <div class="cart-total ">Total: ₹{{ totalPrice }}</div>
+                <form action='/checkout' method="POST">
+                    <input type="hidden" name="totalPrice" value="{{ totalPrice }}">
+                    <button type="submit" class="btn btn-primary checkout-btn" name="checkout" value="true">Checkout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+        
+
+    {% else %}
+    <div class="add-gap"></div>
+    <div>
+        <div class="card-body text-center">
+            <h4>Your cart is empty.</h4>
+            <a href="/" class="btn btn-primary">Continue Shopping</a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% endblock %}
+

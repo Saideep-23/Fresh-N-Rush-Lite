@@ -1,0 +1,37 @@
+{% extends "base_manager.html" %}
+    
+    {% block title %} Coupon Manager {% endblock %}
+      
+    {% block content %}
+    <div class="container mt-5">
+      <h1 class="mb-4">Coupon Code Management</h1>
+      <div class="row">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Create a New Coupon Code</h5>
+              <a href="/manager/add_coupon" class="btn btn-primary">Add Coupon</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="container">
+      <h2 class="mb-4">Existing Coupon Codes</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for coupon in coupons %}
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">{{coupon['coupon_code']}}</h3>
+              <h5 class="card-title">Discount: {{coupon['discount_percentage']}} %</h5>
+              <p class="card-text">Used {{coupon['count']}} times</p>
+              <a href="/manager/delete_coupon/{{coupon['coupon_code']}}" class="btn btn-darkgreen">Delete Coupon</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endblock %}

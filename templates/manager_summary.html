@@ -1,0 +1,18 @@
+{% extends "base_manager.html" %}
+    
+    {% block title %} Summary {% endblock %}
+    
+    {% block content %}
+    <h1 class="mb-4 container">Summary</h1>
+    <div class="chart-container">
+        <div class="chart">
+            <h2 class="chart-title">Product Sales Chart in last 7 days</h2>
+            <img src="data:image/png;base64,{{ bar_chart_data }}" alt="Product Sales Chart">
+        </div>
+    
+        <div class="chart">
+            <h2 class="chart-title">Category Distribution Chart</h2>
+            <img src="data:image/png;base64,{{ pie_chart_data }}" alt="Category Distribution Chart">
+        </div>
+    </div>
+    {% endblock %}

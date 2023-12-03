@@ -1,0 +1,66 @@
+{% extends "base_manager.html" %}
+    
+    {% block title %} Categories Dashboard {% endblock %}
+
+    {% block content %}
+    <div class="container mt-5">
+      <h1 class="mb-4">{{ category_name }} Dashboard</h1>
+      <div class="row">
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Create a New Product</h5>
+              <a href="/manager/add_product" class="btn btn-primary">Add Product</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Create a New Category</h5>
+                <form method="POST" class="row g-3 align-items-center" action="/manager/categories/add_category">
+                    <div class="col-auto">
+                        <input type="text" class="form-control" placeholder="Category Name" name="category_name">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Add Category</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Delete {{ category_name }}</h5>
+                <a href="/manager/categories/{{categoryID}}/delete_category" class="btn btn-darkgreen">Delete Category</a>
+              </div>
+            </div>
+          </div>
+      </div>
+      
+      
+    </div>
+    
+    <div class="container">
+      <h2 class="mb-4">Existing Inventory</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for product in products %}
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">{{product['product_name']}}</h3>
+              <h5 class="card-title">Stock: {{product['quantity']}}  {{product['unit']}}s</h5>
+              <p class="card-text">Price: ₹ {{product['price']}}/{{product['unit']}}</p>
+              <p class="card-text">Manufacture Date: {{product['manufacture_date']}}</p>
+              <p class="card-text">Expiry Date: {{product['expiry_date']}}</p>
+              <p class="card-text">{{product.description}}</p>
+              <a href="/manager/edit_product/{{product['productID']}}" class="btn btn-primary">Edit Product</a>
+              <a href="/manager/delete_product/{{product['productID']}}" class="btn btn-darkgreen">Delete Product</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endblock %}

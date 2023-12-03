@@ -1,0 +1,69 @@
+{% extends "base_user.html" %}
+    
+    {% block style %}
+    <style>
+        .page-header {
+            background-image: url("{{ url_for('static', filename='images/Banner_pic.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            padding:60px 0;
+            text-align: center;
+            border-bottom: 5px solid #d2d2d2;
+        }
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-align: left;
+            margin-left: 100px;
+        }
+        .page-header p {
+            font-size: 18px;
+            text-align: left;
+            margin-left: 100px;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.305);
+        }
+    </style>
+    {% endblock %}
+    {% block title %} Grocery Store {% endblock %}
+    
+    {% block header %}
+    <div class="container-fluid bg-light-green" >
+        <div class="page-header">
+            <h1>Welcome to <span class="text-success">Fresh N'Rush Lite</span></h1>
+            <p>Start shopping for your favorite groceries!</p>
+        </div>
+    </div>
+    {% endblock %}
+    
+    {% block content %}
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for product in products %}
+            <div class="col">
+                <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">{{product[1]}}</h3>
+                    <p class="card-text">Manufacture Date: {{product[2]}}</p>
+                    <p class="card-text">Expiry Date : 12 Months</p>
+                    {% if signed %}
+                    
+                    <form method="POST">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">₹</span>
+                        <span class="input-group-text">{{product[4]}}/{{product[8]}}</span>
+                        <input type="number" class="form-control" placeholder="Amount" name="count">
+                        <button class="btn btn-outline-secondary btn-custom" type="submit" id="button-addon2" name="product" value="{{product[0]}}">Add to Cart</button>
+                    </div>
+                    </form>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+    
